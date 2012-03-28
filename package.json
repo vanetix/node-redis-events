@@ -1,0 +1,20 @@
+{
+  "name": "node-events-pubsub",
+  "version": "0.0.0",
+  "author": "",
+  "description": "event to redis pubsub emitter",
+  "main": "./lib/node-events-pubsub",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vanetix/node-events-pubsub.git"
+  },
+  "keywords": [
+    "events",
+    "pubsub",
+    "redis"
+  ],
+  "dependencies" : {
+    "redis": ">=0.0.0",
+    "hiredis": ">=0.0.0"
+  }
+}
