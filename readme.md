@@ -1,9 +1,11 @@
 Node event publisher
-====================
+===========================
 
 Publish event bindings to redis pubsub, there should be data passed with the events.
 
-# Usage #
+**Have events that happen in an app that you might want published to a redis instance?**
+
+# Usage
 
 ```
 var EventEmitter = require('events'),
@@ -27,6 +29,9 @@ appEmitter.emit('data', 'Just testing'); //published to redis channel 'testing_d
 eventpub.unbindEvent('data');
 ```
 
+# TODO:
+- *tests*
 
-# Contributors #
-- Matt McFarland [vanetix](https://github.com/vanetix)
+
+# Contributors
+- [Matt McFarland](https://github.com/vanetix)
