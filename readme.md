@@ -8,7 +8,7 @@ Publish event bindings to redis pubsub, there should be data passed with the eve
 # Usage
 
 ```
-var EventEmitter = require('events'),
+var EventEmitter = require('events').EventEmitter,
     EventPub = require('node-event-pub'),
     appEmitter = new EventEmitter();
 
@@ -16,7 +16,7 @@ var eventpub = new EventPub({
   hostname: '127.0.0.1', //Defaults to localhost
   port: 6379, //Defaults to 6379
   emitter: appEmitter, //Emitter instance to listen on
-  namespace: 'testing_', //The namespace to prepend the events with when published
+  namespace: 'testing_' //The namespace to prepend the events with when published
 });
 
 //Add the listener

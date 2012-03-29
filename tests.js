@@ -1,5 +1,5 @@
-var EventEmitter = require('events'),
-    EventPub = require('node-event-pub'),
+var EventEmitter = require('events').EventEmitter,
+    EventPub = require('./lib/event-pub'),
     appEmitter = new EventEmitter();
 
 var eventpub = new EventPub({
