@@ -30,8 +30,5 @@ eventpub.unbindEvent('data');
 ```
 
 # TODO:
-- *tests*
-
-
-# Contributors
-- [Matt McFarland](https://github.com/vanetix)
+- *more tests*
+- *convert it to the event emitter itself, so there isn't need for two objects*
