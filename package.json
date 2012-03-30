@@ -14,10 +14,14 @@
     "redis"
   ],
   "dependencies" : {
-    "redis": ">=0.0.0",
-    "hiredis": ">=0.0.0"
+    "redis": ">=0.7.1",
+    "hiredis": ">=0.1.14"
   },
   "devDependencies": {
-    "should": ">=0.0.0"
+    "should": ">=0.6.0",
+    "mocha": ">=1.0.0"
+  },
+  "scripts": {
+    "test": "mocha ./tests.js"
   }
 }
