@@ -1,5 +1,5 @@
 var EventEmitter = require('events').EventEmitter,
-    EventPub = require('./lib/event-pub'),
+    EventPub = require('./lib').Publisher,
     appEmitter = new EventEmitter(),
     should = require('should'),
     redis = require('redis').createClient(),
@@ -9,11 +9,13 @@ var EventEmitter = require('events').EventEmitter,
 describe('Published data', function() {
   var eventpub,
       namespace,
-      events;
+      events,
+      channel1,
+      channel2;
 
   before(function() {
     events = ['string', 'object'];
-    namespace = 'testing_';
+    namespace = 'testing';
 
     eventpub = new EventPub({
       redis: redis,
@@ -21,9 +23,12 @@ describe('Published data', function() {
       namespace: namespace
     });
 
+    channel1 = namespace + '::' + events[0];
+    channel2 = namespace + '::' + events[1];
+
     eventpub.bindEvent(events);
-    subscriber.subscribe(namespace + events[0]);
-    subscriber.subscribe(namespace + events[1]);
+    subscriber.subscribe(namespace + '::' + events[0]);
+    subscriber.subscribe(namespace + '::' + events[1]);
   });
 
   it('should publish object correctly', function(done) {
@@ -33,7 +38,7 @@ describe('Published data', function() {
     };
 
     subscriber.on('message', function(channel, message) {
-      if(channel === namespace + events[1]) {
+      if(channel === channel2) {
         message.should.equal(JSON.stringify(data));
         done();
       }
@@ -46,7 +51,7 @@ describe('Published data', function() {
     var data = 'foo bar baz';
 
     subscriber.on('message', function(channel, message) {
-      if(channel === namespace + events[0]) {
+      if(channel === channel1) {
         message.should.equal(data);
         done();
       }

@@ -1,9 +1,9 @@
 {
-  "name": "node-event-pub",
+  "name": "node-redis-events",
   "version": "0.0.1",
   "author": "Matt McFarland",
-  "description": "event to redis pubsub - publish bindings",
-  "main": "./lib/event-pub",
+  "description": "events to redis pubsub - publish and subscription bindings",
+  "main": "./lib",
   "repository": {
     "type": "git",
     "url": "https://github.com/vanetix/node-event-pub.git"
