@@ -9,9 +9,7 @@ var EventEmitter = require('events').EventEmitter,
 describe('Published data', function() {
   var eventpub,
       namespace,
-      events,
-      channel1,
-      channel2;
+      events;
 
   before(function() {
     events = ['string', 'object'];
@@ -23,12 +21,8 @@ describe('Published data', function() {
       namespace: namespace
     });
 
-    channel1 = namespace + '::' + events[0];
-    channel2 = namespace + '::' + events[1];
-
     eventpub.bindEvent(events);
-    subscriber.subscribe(namespace + '::' + events[0]);
-    subscriber.subscribe(namespace + '::' + events[1]);
+    subscriber.subscribe(namespace);
   });
 
   it('should publish object correctly', function(done) {
@@ -38,8 +32,15 @@ describe('Published data', function() {
     };
 
     subscriber.on('message', function(channel, message) {
-      if(channel === channel2) {
-        message.should.equal(JSON.stringify(data));
+      message.should.be.a('string');
+
+      message = JSON.parse(message);
+
+      if(message.event === events[1]) {
+        message.should.have.property('event').and.equal(events[1]);
+
+        //Y U NO WORK WITH STRICT EQUALS
+        message.should.have.property('data').and.eql(data);
         done();
       }
     });
@@ -51,8 +52,13 @@ describe('Published data', function() {
     var data = 'foo bar baz';
 
     subscriber.on('message', function(channel, message) {
-      if(channel === channel1) {
-        message.should.equal(data);
+      message.should.be.a('string');
+
+      message = JSON.parse(message);
+
+      if(message.event === events[0]) {
+        message.should.have.property('event').and.equal(events[0]);
+        message.should.have.property('data').and.equal(data);
         done();
       }
     });
