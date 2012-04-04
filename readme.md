@@ -30,5 +30,5 @@ eventpub.unbindEvent('data');
 ```
 
 # TODO:
-- *more tests*
+- *better tests, async tests complicate the simple test cases*
 - *convert it to the event emitter itself, so there isn't need for two objects*
