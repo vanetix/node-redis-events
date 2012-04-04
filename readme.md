@@ -4,6 +4,7 @@ Node event publisher
 Publish event bindings to redis pubsub, there should be data passed with the events.
 
 **Have events that happen in an app that you might want published to a redis instance?**
+*Why redis? Because you can subscribe with multiple clients, being one app can fire events to another app that is running on a python platform for example.*
 
 # Usage
 
