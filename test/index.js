@@ -1,74 +1,63 @@
-var EventEmitter = require('events').EventEmitter,
-    EventPub = require('../lib').Publisher,
-    appEmitter = new EventEmitter(),
-    should = require('should'),
-    redis = require('redis').createClient(),
-    subscriber = require('redis').createClient();
+var Emitter = require('../'),
+    redis = require('redis').createClient();
 
+describe('Emitter', function() {
+  describe('locally', function() {
+    var emitter;
 
-describe('Published data', function() {
-  var eventpub,
-      namespace,
-      events;
-
-  before(function() {
-    events = ['string', 'object'];
-    namespace = 'testing';
-
-    eventpub = new EventPub({
-      redis: redis,
-      emitter: appEmitter,
-      namespace: namespace
+    before(function() {
+      emitter = new Emitter({redis: redis});
     });
 
-    eventpub.bindEvent(events);
-    subscriber.subscribe(namespace);
+    it('should only fire once', function(done) {
+      // mocha will fire an error if `done` invoked < 1
+      emitter.on('fire', function() {
+        return done();
+      });
+
+      emitter.emit('fire');
+    });
+
+    it('should remove events', function() {
+      emitter.removeAllListeners('fire');
+      emitter._subscriptions.should.have.length(0);
+    });
   });
 
-  it('should publish object correctly', function(done) {
-    var data = {
-      'foo': 'bar',
-      'baz': 1
-    };
+  describe('redis instance', function() {
+    var emitter;
 
-    subscriber.on('message', function(channel, message) {
-      message.should.be.a('string');
+    before(function() {
+      emitter = new Emitter();
+    });
 
-      message = JSON.parse(message);
-
-      if(message.event === events[1]) {
-        message.should.have.property('event').and.equal(events[1]);
-
-        //Y U NO WORK WITH STRICT EQUALS
-        message.should.have.property('data').and.eql(data);
+    it('should get data from emitter', function(done) {
+      redis.subscribe('default:data', function() {
         done();
-      }
-    });
+      });
 
-    appEmitter.emit('object', data);
+      emitter.emit('data');
+    });
   });
 
-  it('should publish string correctly', function(done) {
-    var data = 'foo bar baz';
+  describe('with multiple instances', function() {
+    var emitter_1, emitter_2;
 
-    subscriber.on('message', function(channel, message) {
-      message.should.be.a('string');
+    before(function() {
+      emitter_1 = new Emitter();
+      emitter_2 = new Emitter();
+    });
 
-      message = JSON.parse(message);
-
-      if(message.event === events[0]) {
-        message.should.have.property('event').and.equal(events[0]);
-        message.should.have.property('data').and.equal(data);
+    it('should talk to another', function(done) {
+      emitter_1.on('event 1', function(data) {
+        data.should.equal('data here');
         done();
-      }
+      });
+      
+      // Slow down the event firing
+      setTimeout(function() {
+        emitter_2.emit('event 1', 'data here');
+      }, 10);
     });
-
-    appEmitter.emit('string', data);
   });
-
-  it('should unbind events', function() {
-    eventpub.unbindEvent(events[0]);
-    appEmitter.listeners(events[0]).should.have.lengthOf(0);
-  });
-
 });

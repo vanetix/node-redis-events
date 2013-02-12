@@ -1,8 +1,5 @@
 /**
- * Expose lib
+ * Expose `Emitter`
  */
 
-module.exports = {
-  Publisher: require('./lib/publisher'),
-  Subscriber: require('./lib/subscriber')
-};
+module.exports = require('./lib/emitter');
