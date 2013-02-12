@@ -1,5 +1,5 @@
 var EventEmitter = require('events').EventEmitter,
-    EventPub = require('./lib').Publisher,
+    EventPub = require('../lib').Publisher,
     appEmitter = new EventEmitter(),
     should = require('should'),
     redis = require('redis').createClient(),
