@@ -28,7 +28,7 @@ emitter.emit('data', 'some work');
 - More test coverage
 
 ## Release history
-- 1.0.0 - *More flexible channel names, support redis auth. Thanks @pgolm!*
+- 1.0.0 - *More flexible channel names, support redis auth. Thanks [@pgolm](https://github.com/pgolm)!*
 - 0.9.0 - *Updated to an actual emitter*
 
 ## License (MIT)
