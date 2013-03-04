@@ -1,5 +1,8 @@
-# Node event publisher [![Build Status](https://travis-ci.org/vanetix/node-redis-events.png)](https://travis-ci.org/vanetix/node-redis-events)
+# redis-events [![Build Status](https://travis-ci.org/vanetix/node-redis-events.png)](https://travis-ci.org/vanetix/node-redis-events)
 *Publish events between application instances using redis pub/sub* ***If an event is fired locally, the event is only fired once.***
+
+## Installing
+`npm install node-redis-events`
 
 ## Usage
 ```
@@ -22,9 +25,10 @@ emitter.emit('data', 'some work');
 ```
 
 ## TODO:
-- More test coveragee
+- More test coverage
 
 ## Release history
+- 1.0.0 - *More flexible channel names, support redis auth. Thanks @pgolm!*
 - 0.9.0 - *Updated to an actual emitter*
 
 ## License (MIT)
