@@ -1,4 +1,4 @@
-# Node event publisher
+# Node event publisher [![Build Status](https://travis-ci.org/vanetix/node-redis-events.png)](https://travis-ci.org/vanetix/node-redis-events)
 *Publish events between application instances using redis pub/sub* ***If an event is fired locally, the event is only fired once.***
 
 ## Usage
